@@ -10,8 +10,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -28,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="edu.berkeley.cs160.achaldave.prog3.DeparturesActivity"
             android:label="@string/title_activity_departures"
@@ -46,6 +47,12 @@
             android:name="edu.berkeley.cs160.achaldave.prog3.StationsAllActivity"
             android:label="@string/title_activity_stations_all" >
         </activity>
+        
+        <activity
+            android:name="edu.berkeley.cs160.achaldave.prog3.StationSelectActivity"
+            android:label="@string/title_station_select"
+            android:theme="@style/PopupTheme">
+            </activity>
     </application>
 
 </manifest>

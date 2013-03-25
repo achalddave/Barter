@@ -57,7 +57,7 @@
         android:layout_alignLeft="@+id/closestStationContainer"
         android:layout_alignRight="@+id/closestStationContainer"
         android:layout_below="@+id/closestStationContainer"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button"
         android:padding="10dp"
         android:paddingLeft="20dp"
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/allStationsContainer"
         android:layout_below="@+id/allStationsContainer"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button"
         android:padding="10dp"
         android:paddingLeft="20dp"
@@ -109,5 +109,21 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/help"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="Help! What&apos;s a BART?" />
 
 </RelativeLayout>

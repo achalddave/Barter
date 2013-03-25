@@ -4,15 +4,31 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.TextView;
+import edu.berkeley.cs160.achaldave.prog3.Helpers.Callback;
 import edu.berkeley.cs160.achaldave.prog3.Helpers.TripData;
+import edu.berkeley.cs160.achaldave.prog3.Helpers.TripLegData;
 
 public class TripActivity extends Activity {
+	AutoCompleteTextView originField;
+	AutoCompleteTextView destinationField;
+	TextView originTime;
+	TextView destinationTime;
+	TextView fareField;
 
+	String origin;
+	String destination;
+	TripData currData;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trip);
+		setupView();
 	}
 
 	@Override
@@ -22,30 +38,87 @@ public class TripActivity extends Activity {
 		return true;
 	}
 
-	private void setupView() {
-		Bundle data = getIntent().getExtras();
-		if (data.containsKey("map")) {
-			int mapId = data.getInt("map");
-			InteractiveMapFragment map = (InteractiveMapFragment) getFragmentManager().findFragmentById(R.id.map);
-			map.setMap(data.getInt("map"));
-		} else {
-			View mapFrag = findViewById(R.id.map_fragment);
-			mapFrag.setVisibility(View.INVISIBLE);
+	private void updateDirections() {
+		updateDirections(false);
+	}
+	
+	private void updateDirections(boolean forceUpdate) {
+		if (origin != null && destination != null && (currData == null || forceUpdate)) {
+			HomeActivity.bartHandler.getTripData(origin, destination, new Callback<TripData, Void>() {
+
+				@Override
+				public Void call(TripData data) {
+					final TripData fData = data;
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							setDirections(fData);
+						}
+					});
+					return null;
+				}
+			});
 		}
-		TripData trip = data.getParcelable("trip");
-		TextView originText = (TextView) findViewById(R.id.tripOrigin);
-		TextView departureTimeDetails = (TextView) findViewById(R.id.tripDepartureTime);
+	}
+	
+	private void setDirections(TripData data) {
+		currData = data;
+		ListView directionsList = (ListView) findViewById(R.id.tripDirections);
+		directionsList.setAdapter(new TripDataListAdapter(this, currData.tripLegs.toArray(new TripLegData[0])));
+	}
+	
+	private void setupView() {
+		originField = (AutoCompleteTextView) findViewById(R.id.tripOriginField);
+		originTime = (TextView) findViewById(R.id.tripDepartureTime);
 		
-		originText.setText(trip.origin);
-		departureTimeDetails.setText(trip.getDepartTimeString());
+		destinationField = (AutoCompleteTextView) findViewById(R.id.tripDestinationField);
+		destinationTime = (TextView) findViewById(R.id.tripArrivalTime);
 		
-		TextView destinationText = (TextView) findViewById(R.id.tripDestination);
-		TextView arrivalTimeDetails = (TextView) findViewById(R.id.tripArrivalTime);
+		fareField = (TextView) findViewById(R.id.tripFare);
 		
-		destinationText.setText(trip.destination);
-		arrivalTimeDetails.setText(trip.getArrivalTimeString());
+		HomeActivity.bartHandler.getStationNames(new Callback<String[], Void>() {
+			@Override
+			public Void call(String[] stations) {
+				final String[] fStations = stations;
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setupAutocomplete(fStations);
+					}
+				});
+				return null;
+			}
+		});
+	}
+	
+	private void setupAutocomplete(String[] stations) {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, stations);
+		originField.setThreshold(1);
+		originField.setAdapter(adapter);
+		destinationField.setThreshold(1);
+		destinationField.setAdapter(adapter);
 		
-		TextView fareText = (TextView) findViewById(R.id.tripFare);
-		fareText.setText(trip.getFareString());
+		
+		destinationField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1,
+					int position, long id) {
+				destination = parent.getItemAtPosition(position).toString();
+				updateDirections(true);
+			}
+		});
+		
+		originField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1,
+					int position, long id) {
+				origin = parent.getItemAtPosition(position).toString();
+				updateDirections(true);
+			}
+		});
 	}
 }

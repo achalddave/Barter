@@ -1,39 +1,37 @@
 package edu.berkeley.cs160.achaldave.prog3.Helpers;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.text.format.Time;
+import java.util.ArrayList;
 
-public class TripData implements Parcelable {
+public class TripData {
 	public String origin;
 	public String destination;
-	public Time departTime;
-	public Time arrivalTime;
+	public String departTime;
+	public String arrivalTime;
 	public float fare;
-	public int route;
+	public ArrayList<TripLegData> tripLegs;
 	
 	// "2:30 pm on Fri, Jan 32nd"
 	private static String TIME_FORMAT = "%h:%i %a on %D, %M %j%S";
 
-	public TripData(String origin, String destination, Time departTime, Time arrivalTime, float fare, int route) {
+	public TripData(String origin, String destination, String departTime, String arrivalTime, float fare, ArrayList<TripLegData> tripLegs) {
 		this.origin = origin;
 		this.destination = destination;
 		this.departTime = departTime;
 		this.arrivalTime = arrivalTime;
 		this.fare = fare;
-		this.route = route;
+		this.tripLegs = tripLegs;
 	}
 	
+	/*
 	public TripData(Parcel source) {
 		origin = source.readString();
 		destination = source.readString();
-		departTime = new Time();
-		arrivalTime = new Time();
-		departTime.set(source.readLong());
-		arrivalTime.set(source.readLong());
+		departTime = source.readString();
+		arrivalTime = source.readString();
 		fare = source.readFloat();
-		route = source.readInt();
+		tripLegs = source.readArrayList(TripLegData.class.getClassLoader());
 	}
+	*/
 	
 	public String getDepartTimeString() {
 		return departTime.format(TIME_FORMAT);
@@ -47,6 +45,7 @@ public class TripData implements Parcelable {
 		return "$" + fare;
 	}
 	
+	/*
 	public static final Parcelable.Creator<TripData> CREATOR = new Parcelable.Creator<TripData>() {
 
 		@Override
@@ -62,7 +61,6 @@ public class TripData implements Parcelable {
 		}
 		
 	};
-	
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
@@ -74,10 +72,11 @@ public class TripData implements Parcelable {
 		// TODO Auto-generated method stub
 		dest.writeString(origin);
 		dest.writeString(destination);
-		dest.writeLong(departTime.toMillis(true));
-		dest.writeLong(arrivalTime.toMillis(true));
+		dest.writeString(departTime);
+		dest.writeString(arrivalTime);
 		dest.writeFloat(fare);
-		dest.writeInt(route);
+		dest.writeTypedList(tripLegs);
 	}
+	*/
 	
 }

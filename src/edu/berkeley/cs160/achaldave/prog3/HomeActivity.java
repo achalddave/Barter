@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,23 +37,15 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
+
 		setupView();
 		bartHandler = new BartHandler();
 		setupLocationHandling();
-		
-		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+		prefs = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		if (true || !prefs.contains("has_launched_before")) {
-			Intent intent = new Intent(HomeActivity.this, BartIntroActivity.class);
-			Display display = getWindowManager().getDefaultDisplay();
-			Point size = new Point();
-			display.getSize(size);
-			intent.putExtra("width", (int) (size.x * 0.95));
-			intent.putExtra("height", (int) (size.y * 0.95));
-			startActivity(intent);
-			Editor prefEdit = prefs.edit();
-			prefEdit.putBoolean("has_launched_before", true);
-			prefEdit.commit();
+			openHelp();
 		}
 	}
 
@@ -65,7 +59,20 @@ public class HomeActivity extends Activity {
 		location = loc;
 		locationUpdateHandler();
 	}
-	
+
+	private void openHelp() {
+		Intent intent = new Intent(HomeActivity.this, BartIntroActivity.class);
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		intent.putExtra("width", (int) (size.x * 0.95));
+		intent.putExtra("height", (int) (size.y * 0.95));
+		startActivity(intent);
+		Editor prefEdit = prefs.edit();
+		prefEdit.putBoolean("has_launched_before", true);
+		prefEdit.commit();
+	}
+
 	private void setupLocationHandling() {
 		locationManager = (LocationManager) this
 				.getSystemService(LOCATION_SERVICE);
@@ -86,6 +93,13 @@ public class HomeActivity extends Activity {
 	}
 
 	private void setupView() {
+		Button help = (Button) findViewById(R.id.help);
+		help.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				openHelp();
+			}
+		});
 		LinearLayout departures = (LinearLayout) findViewById(R.id.closestStationContainer);
 		departures.setOnClickListener(new View.OnClickListener() {
 
@@ -97,13 +111,23 @@ public class HomeActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 		LinearLayout allStations = (LinearLayout) findViewById(R.id.allStationsContainer);
 		allStations.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this, StationsAllActivity.class);
+				Intent intent = new Intent(HomeActivity.this,
+						StationsAllActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		LinearLayout tripPlanner = (LinearLayout) findViewById(R.id.tripPlanContainer);
+		tripPlanner.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this, TripActivity.class);
 				startActivity(intent);
 			}
 		});

@@ -17,6 +17,7 @@
     <string name="view_bookmarks">My stations</string>
     <string name="closest_station_view_departures">View departures</string>
     <string name="title_activity_departures">Departures</string>
+    <string name="title_station_select">Station selector</string>
     <string name="placeholder_station">Unicorn land</string>
     <string name="title_activity_trip">TripActivity</string>
     <string name="trip_title">Trip</string>
@@ -34,5 +35,6 @@
     <string name="title_activity_station_select">StationSelectActivity</string>
     <string name="welcome">Welcome to the Bay Area!</string>
     <string name="bart">BART</string>
+    <string name="welcome_sub">We\'ll help you get around</string>
 
 </resources>

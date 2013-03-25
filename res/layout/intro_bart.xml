@@ -28,9 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="hi"
             android:layout_marginTop="5dp"
+            android:text="@string/welcome_sub"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +68,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/bartIntro1small"
+                android:id="@+id/TripTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -129,7 +130,7 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/legOriginStation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

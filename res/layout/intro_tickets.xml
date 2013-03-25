@@ -12,7 +12,7 @@
         android:gravity="center_horizontal" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/legOriginStation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -25,17 +25,17 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/legRouteName"
             android:layout_marginTop="10dp"
             android:src="@drawable/bart_ticket_machine" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/legRouteName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView1"
+            android:layout_alignLeft="@+id/legOriginStation"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/legOriginStation"
             android:layout_marginTop="14dp"
             android:text="Unfortunately, we can&apos;t sell you tickets. You can buy them at machines like these at any station:"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -62,7 +62,7 @@
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:layout_below="@+id/textView4"
+            android:layout_below="@+id/tripFare"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:src="@drawable/bart_ticket_eater" />
@@ -81,14 +81,14 @@
             android:id="@+id/TextView01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignLeft="@+id/legRouteName"
             android:layout_below="@+id/imageView2"
             android:layout_marginTop="10dp"
             android:text="Using tickets"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tripFare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TextView01"
