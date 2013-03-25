@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,7 +53,12 @@ public class DeparturesActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(DeparturesActivity.this, StationsAllActivity.class);
+				Intent intent = new Intent(DeparturesActivity.this, StationSelectActivity.class);
+				Display display = getWindowManager().getDefaultDisplay();
+				Point size = new Point();
+				display.getSize(size);
+				intent.putExtra("width", (int) (size.x * 0.9));
+				intent.putExtra("height", (int) (size.y * 0.9));
 				startActivity(intent);
 			}
 		});
@@ -74,7 +81,13 @@ public class DeparturesActivity extends Activity {
 	private void setOrigin() {
 		if (origin != null) {
 			AutoCompleteTextView departingField = (AutoCompleteTextView) findViewById(R.id.departingStation);
+			// BECAUSE ANDROID HATES YOU THAT'S WHY
+			// http://stackoverflow.com/questions/5495225/how-to-disable-autocompletetextviews-drop-down-from-showing-up
+			departingField.setFocusable(false);
+			departingField.setFocusableInTouchMode(false);
 			departingField.setText(origin);
+			departingField.setFocusable(true);
+			departingField.setFocusableInTouchMode(true);			
 		}
 	}
 	
@@ -103,6 +116,17 @@ public class DeparturesActivity extends Activity {
 			ListView departuresList = (ListView) findViewById(R.id.departuresList);
 			departuresList.setAdapter(new DeparturesListAdapter(this, departures));
 		}
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		Bundle a = intent.getExtras();
+		if (a.containsKey("selectedStation")) {
+			origin = a.getString("selectedStation");
+			setOrigin();
+			setDepartures(true);
+		}
+		Log.d("Achal", "Received new intent");
 	}
 
 	private void setupAutocomplete(String[] stations) {

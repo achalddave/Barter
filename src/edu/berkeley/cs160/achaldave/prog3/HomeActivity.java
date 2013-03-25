@@ -41,13 +41,13 @@ public class HomeActivity extends Activity {
 		setupLocationHandling();
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		if (!prefs.contains("has_launched_before")) {
+		if (true || !prefs.contains("has_launched_before")) {
 			Intent intent = new Intent(HomeActivity.this, BartIntroActivity.class);
 			Display display = getWindowManager().getDefaultDisplay();
 			Point size = new Point();
 			display.getSize(size);
-			intent.putExtra("width", (int) (size.x * 0.9));
-			intent.putExtra("height", (int) (size.y * 0.9));
+			intent.putExtra("width", (int) (size.x * 0.95));
+			intent.putExtra("height", (int) (size.y * 0.95));
 			startActivity(intent);
 			Editor prefEdit = prefs.edit();
 			prefEdit.putBoolean("has_launched_before", true);

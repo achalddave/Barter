@@ -2,20 +2,20 @@ package edu.berkeley.cs160.achaldave.prog3;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class BartIntroActivity extends Activity {
+public class StationSelectActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,47 +23,30 @@ public class BartIntroActivity extends Activity {
 		Intent intent = getIntent();
 		int width = intent.getIntExtra("width", 500);
 		int height = intent.getIntExtra("height", 500);
-		setContentView(R.layout.activity_bart_intro);
+		setContentView(R.layout.activity_station_select);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
 				WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 		LayoutParams params = getWindow().getAttributes();
-		params.height = height;
-		params.width = width;
+		params.height = height; // fixed height
+		params.width = width; // fixed width
 		params.alpha = 1.0f;
 		params.dimAmount = 0.5f;
 		getWindow().setAttributes(
 				(android.view.WindowManager.LayoutParams) params);
 		
-		Fragment bartIntro = new BartIntroFragment();
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		ft.replace(R.id.fragmentContainer, bartIntro);
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-		ft.addToBackStack(null);
-		ft.commit();
-		
-		final Button continueButton = (Button) findViewById(R.id.bartIntroNextButton);
-		continueButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Fragment ticketIntro = new TicketIntroFragment();
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.replace(R.id.fragmentContainer, ticketIntro);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-				ft.addToBackStack(null);
-				ft.commit();
+		Fragment stationsListFrag = (Fragment) getFragmentManager().findFragmentById(R.id.stationSelector);
+		ListView stationsList = (ListView) stationsListFrag.getView().findViewById(R.id.stationsList);
+		stationsList.setOnItemClickListener(new OnItemClickListener() {
 
-				continueButton.setText("Got it, thanks!");
-				continueButton.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						finish();
-					}
-				});
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				Intent intent = new Intent(StationSelectActivity.this, DeparturesActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.putExtra("selectedStation", ((TextView) view.findViewById(R.id.stationAdapterStationName)).getText());
+				startActivity(intent);
 			}
-		});;
+		});
 	}
 
 	@Override

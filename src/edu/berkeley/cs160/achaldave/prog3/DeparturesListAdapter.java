@@ -30,6 +30,7 @@ public class DeparturesListAdapter extends ArrayAdapter<DepartureData>{
 		TextView time = (TextView) convertView.findViewById(R.id.departureTime);
 		TextView platform = (TextView) convertView.findViewById(R.id.departurePlatform);
 		DepartureData curr = departures[position];
+		name.setText(curr.destination);
 		time.setText(curr.getDepartureTimeString());
 		platform.setText("Platform " + curr.platform);
 		return convertView;

@@ -29,14 +29,26 @@ public class BartHandler {
 	private final static String keyStr = "key=" + apiKey;
 	private final static String baseBartUrl = "http://api.bart.gov/api";
 	private HashMap<String, Station> stations = new HashMap<String, Station>();
-	private HashMap<String, Integer> colorToImage = new HashMap<String, Integer>(6);
+	private static HashMap<String, Integer> colorToMap = new HashMap<String, Integer>(6);
+	private static HashMap<Integer, Integer> routeToMap = new HashMap<Integer, Integer>(6);
 
 	public BartHandler() {
-		colorToImage.put("#ffff33", R.drawable.pittsburg_sfo_map);
-		colorToImage.put("#ff9933", R.drawable.fremont_richmond_map);
-		colorToImage.put("#339933", R.drawable.fremont_daly_map);
-		colorToImage.put("#ff0000", R.drawable.richmond_millbrae_map);
-		colorToImage.put("#0099cc", R.drawable.dublin_daly_map);
+		colorToMap.put("#ffff33", R.drawable.pittsburg_sfo_map);
+		colorToMap.put("#ff9933", R.drawable.fremont_richmond_map);
+		colorToMap.put("#339933", R.drawable.fremont_daly_map);
+		colorToMap.put("#ff0000", R.drawable.richmond_millbrae_map);
+		colorToMap.put("#0099cc", R.drawable.dublin_daly_map);
+		
+		routeToMap.put(1, R.drawable.pittsburg_sfo_map);
+		routeToMap.put(2, R.drawable.pittsburg_sfo_map);
+		routeToMap.put(3, R.drawable.fremont_richmond_map);
+		routeToMap.put(4, R.drawable.fremont_richmond_map);
+		routeToMap.put(5, R.drawable.fremont_daly_map);
+		routeToMap.put(6, R.drawable.fremont_daly_map);
+		routeToMap.put(7, R.drawable.richmond_millbrae_map);
+		routeToMap.put(8, R.drawable.richmond_millbrae_map);
+		routeToMap.put(11, R.drawable.dublin_daly_map);
+		routeToMap.put(12, R.drawable.dublin_daly_map);
 	}
 
 	// this will be called on the home view, so BartHandler should
@@ -101,6 +113,10 @@ public class BartHandler {
 		}
 	}
 	
+	public void getTripData(String originStation, String destinationStation, final Callback<TripData, Void> callback) {
+		
+	}
+	
 	private void parseDepartures(Document doc,
 			Callback<ArrayList<DepartureData>, Void> callback) {
 		try {
@@ -150,11 +166,14 @@ public class BartHandler {
 					int lhsTime = Integer.parseInt(lhs.departureTime);
 					int rhsTime = Integer.parseInt(rhs.departureTime);
 					if (lhsTime < rhsTime){
+						Log.d("Achal", "< : lhsTime: " + lhsTime + "; rhsTime: " + rhsTime);
 						return -1;
 					} else if (lhsTime == rhsTime) {
+						Log.d("Achal", "= : lhsTime: " + lhsTime + "; rhsTime: " + rhsTime);
 						return 0;
 					} else {
-						return -1;
+						Log.d("Achal", "> : lhsTime: " + lhsTime + "; rhsTime: " + rhsTime);
+						return 1;
 					}
 				}
 			});

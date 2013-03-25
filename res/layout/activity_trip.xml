@@ -9,7 +9,7 @@
     tools:context=".TripActivity" >
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/bartIntro1small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,7 +21,7 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/bartIntro1small"
         android:layout_centerHorizontal="true"
         android:orientation="vertical" >
 

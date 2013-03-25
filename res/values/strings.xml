@@ -25,9 +25,14 @@
 
     <string name="title_activity_bart_intro">BartIntroActivity</string>
     <string name="title_activity_stations_all">StationsAllActivity</string>
-    
+
     <color name="button_stroke">#333333</color>
     <color name="button_background">#000000</color>
-    <color name="button_click_stroke">#333333</color><color name="button_click_background">#0A004DFF</color>
+    <color name="button_click_stroke">#333333</color>
+    <color name="button_click_background">#0A004DFF</color>
+
+    <string name="title_activity_station_select">StationSelectActivity</string>
+    <string name="welcome">Welcome to the Bay Area!</string>
+    <string name="bart">BART</string>
 
 </resources>
