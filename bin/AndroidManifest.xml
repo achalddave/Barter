@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.berkeley.cs160.achaldave.prog3"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon_with_bg"
+        android:label="@string/app_name"
+        android:logo="@drawable/icon"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="edu.berkeley.cs160.achaldave.prog3.HomeActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="edu.berkeley.cs160.achaldave.prog3.DeparturesActivity"
+            android:label="@string/title_activity_departures"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="edu.berkeley.cs160.achaldave.prog3.TripActivity"
+            android:label="@string/title_activity_trip"
+            android:theme="@style/ActivityTheme" >
+        </activity>
+        <activity
+            android:name="edu.berkeley.cs160.achaldave.prog3.BartIntroActivity"
+            android:label="@string/title_activity_bart_intro"
+            android:theme="@style/PopupTheme" />
+        <activity
+            android:name="edu.berkeley.cs160.achaldave.prog3.StationsAllActivity"
+            android:label="@string/title_activity_stations_all" >
+        </activity>
+    </application>
+
+</manifest>

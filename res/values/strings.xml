@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Barter</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="closest_station">Closest station: </string>
+    <string name="location_progress">Trying to find you...</string>
+
+    <color name="gray_loading">#aaaaaa</color>
+
+    <string name="departures">Departures</string>
+
+    <color name="background">#000000</color>
+
+    <string name="view_all_stations">View All Stations</string>
+    <string name="view_bookmarks">My stations</string>
+    <string name="closest_station_view_departures">View departures</string>
+    <string name="title_activity_departures">Departures</string>
+    <string name="placeholder_station">Unicorn land</string>
+    <string name="title_activity_trip">TripActivity</string>
+    <string name="trip_title">Trip</string>
+
+    <color name="light_font">#aaaaaa</color>
+
+    <string name="title_activity_bart_intro">BartIntroActivity</string>
+    <string name="title_activity_stations_all">StationsAllActivity</string>
+    
+    <color name="button_stroke">#333333</color>
+    <color name="button_background">#000000</color>
+    <color name="button_click_stroke">#333333</color><color name="button_click_background">#0A004DFF</color>
+
+</resources>
