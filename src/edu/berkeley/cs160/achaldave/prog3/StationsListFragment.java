@@ -1,11 +1,12 @@
 package edu.berkeley.cs160.achaldave.prog3;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import edu.berkeley.cs160.achaldave.prog3.Helpers.Callback;
 
@@ -20,7 +21,15 @@ public class StationsListFragment extends Fragment {
 		myView = inflater.inflate(R.layout.stations_list_view,
 				container, false);
 		setStations();
-		myView.findViewById(R.id.stationsList)
+		ListView stationsList = (ListView) myView.findViewById(R.id.stationsList);
+		stationsList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				departures[position]
+			}
+		})
 		return myView;
 	}
 
