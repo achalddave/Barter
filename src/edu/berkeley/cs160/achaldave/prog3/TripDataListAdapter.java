@@ -26,8 +26,8 @@ public class TripDataListAdapter extends ArrayAdapter<TripLegData>{
 		}
 		TextView originStation = (TextView) convertView.findViewById(R.id.legOriginStation);
 		TextView originTime = (TextView) convertView.findViewById(R.id.legOriginTime);
-		TextView destinationStation = (TextView) convertView.findViewById(R.id.legOriginStation);
-		TextView destinationTime = (TextView) convertView.findViewById(R.id.legOriginTime);
+		TextView destinationStation = (TextView) convertView.findViewById(R.id.legDestinationStation);
+		TextView destinationTime = (TextView) convertView.findViewById(R.id.legDestinationTime);
 		TextView routeText = (TextView) convertView.findViewById(R.id.legRouteName);
 		
 		final TripLegData curr = tripLegs[position];
@@ -35,6 +35,7 @@ public class TripDataListAdapter extends ArrayAdapter<TripLegData>{
 		originTime.setText(curr.originTime);
 		destinationStation.setText(curr.destinationStation);
 		destinationTime.setText(curr.destinationTime);
+		routeText.setText(curr.getRouteName());
 
 		return convertView;
 	}

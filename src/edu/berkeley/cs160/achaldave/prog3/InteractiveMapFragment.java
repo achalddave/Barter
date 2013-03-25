@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class InteractiveMapFragment extends Fragment {
     @Override
@@ -18,5 +19,10 @@ public class InteractiveMapFragment extends Fragment {
     public void setMap(int mapId) {
     	ImageView map = (ImageView) this.getActivity().findViewById(R.id.map);
     	map.setImageResource(mapId);
+    }
+    
+    public void setRouteName(String name) {
+    	TextView routeName = (TextView) getActivity().findViewById(R.id.routeName);
+    	routeName.setText(name);
     }
 }

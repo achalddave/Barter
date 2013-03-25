@@ -34,15 +34,15 @@ public class TripData {
 	*/
 	
 	public String getDepartTimeString() {
-		return departTime.format(TIME_FORMAT);
+		return departTime;
 	}
 	
 	public String getArrivalTimeString() {
-		return arrivalTime.format(TIME_FORMAT);
+		return arrivalTime;
 	}
 	
 	public String getFareString() {
-		return "$" + fare;
+		return "$" + String.format("%.2f", fare);
 	}
 	
 	/*

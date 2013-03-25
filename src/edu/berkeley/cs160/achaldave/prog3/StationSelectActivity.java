@@ -20,10 +20,11 @@ public class StationSelectActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_station_select);
+		
 		Intent intent = getIntent();
 		int width = intent.getIntExtra("width", 500);
 		int height = intent.getIntExtra("height", 500);
-		setContentView(R.layout.activity_station_select);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
 				WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 		LayoutParams params = getWindow().getAttributes();
@@ -34,6 +35,8 @@ public class StationSelectActivity extends Activity {
 		getWindow().setAttributes(
 				(android.view.WindowManager.LayoutParams) params);
 		
+		// HACKHACKHACK HAHA DUE IN 1 HOUR
+		final boolean goToDeparture = !intent.getExtras().containsKey("dontGoToDeparture");
 		Fragment stationsListFrag = (Fragment) getFragmentManager().findFragmentById(R.id.stationSelector);
 		ListView stationsList = (ListView) stationsListFrag.getView().findViewById(R.id.stationsList);
 		stationsList.setOnItemClickListener(new OnItemClickListener() {
@@ -41,7 +44,12 @@ public class StationSelectActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				Intent intent = new Intent(StationSelectActivity.this, DeparturesActivity.class);
+				Intent intent;
+				if (goToDeparture) {
+					intent = new Intent(StationSelectActivity.this, DeparturesActivity.class);
+				} else {
+					intent = new Intent(StationSelectActivity.this, TripActivity.class);
+				}
 				intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.putExtra("selectedStation", ((TextView) view.findViewById(R.id.stationAdapterStationName)).getText());
 				startActivity(intent);

@@ -1,12 +1,19 @@
 package edu.berkeley.cs160.achaldave.prog3;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.berkeley.cs160.achaldave.prog3.Helpers.Callback;
@@ -19,10 +26,14 @@ public class TripActivity extends Activity {
 	TextView originTime;
 	TextView destinationTime;
 	TextView fareField;
+	ListView directionsList;
 
 	String origin;
 	String destination;
 	TripData currData;
+	
+	// for station selector
+	private boolean selectOrigin = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +75,11 @@ public class TripActivity extends Activity {
 	
 	private void setDirections(TripData data) {
 		currData = data;
-		ListView directionsList = (ListView) findViewById(R.id.tripDirections);
 		directionsList.setAdapter(new TripDataListAdapter(this, currData.tripLegs.toArray(new TripLegData[0])));
+		
+		fareField.setText(data.getFareString());
+		originTime.setText(data.getDepartTimeString());
+		destinationTime.setText(data.getArrivalTimeString());
 	}
 	
 	private void setupView() {
@@ -77,6 +91,59 @@ public class TripActivity extends Activity {
 		
 		fareField = (TextView) findViewById(R.id.tripFare);
 		
+		ImageView originListStations = (ImageView) findViewById(R.id.tripSelectOrigin);
+		originListStations.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				selectOrigin = true;
+				Intent intent = new Intent(TripActivity.this, StationSelectActivity.class);
+				Display display = getWindowManager().getDefaultDisplay();
+				Point size = new Point();
+				display.getSize(size);
+				intent.putExtra("width", (int) (size.x * 0.9));
+				intent.putExtra("height", (int) (size.y * 0.9));
+				intent.putExtra("dontGoToDeparture", true);
+				startActivity(intent);
+			}
+		});
+		
+		ImageView destinationListStations = (ImageView) findViewById(R.id.tripSelectDestination);
+		destinationListStations.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				selectOrigin = false;
+				Intent intent = new Intent(TripActivity.this, StationSelectActivity.class);
+				Display display = getWindowManager().getDefaultDisplay();
+				Point size = new Point();
+				display.getSize(size);
+				intent.putExtra("width", (int) (size.x * 0.9));
+				intent.putExtra("height", (int) (size.y * 0.9));
+				intent.putExtra("dontGoToDeparture", true);
+				startActivity(intent);
+			}
+		});
+		
+		directionsList = (ListView) findViewById(R.id.tripDirections);
+		directionsList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(TripActivity.this, DialogMapActivity.class);
+				Display display = getWindowManager().getDefaultDisplay();
+				Point size = new Point();
+				display.getSize(size);
+				intent.putExtra("width", (int) (size.x * 0.9));
+				intent.putExtra("height", (int) (size.y * 0.9));
+				intent.putExtra("mapId", currData.tripLegs.get(position).getRouteMap());
+				intent.putExtra("routeName", currData.tripLegs.get(position).getRouteName());
+				startActivity(intent);
+			}
+		});
+
 		HomeActivity.bartHandler.getStationNames(new Callback<String[], Void>() {
 			@Override
 			public Void call(String[] stations) {
@@ -90,6 +157,26 @@ public class TripActivity extends Activity {
 				return null;
 			}
 		});
+	}
+	
+	private void updateFieldsWithCurrentData() {
+		if (origin != null) {
+			// BECAUSE ANDROID HATES YOU THAT'S WHY
+			// http://stackoverflow.com/questions/5495225/how-to-disable-autocompletetextviews-drop-down-from-showing-up
+			originField.setFocusable(false);
+			originField.setFocusableInTouchMode(false);
+			originField.setText(origin);
+			originField.setFocusable(true);
+			originField.setFocusableInTouchMode(true);			
+		}
+		if (destination != null) {
+			destinationField.setFocusable(false);
+			destinationField.setFocusableInTouchMode(false);
+			destinationField.setText(destination);
+			destinationField.setFocusable(true);
+			destinationField.setFocusableInTouchMode(true);			
+		}
+		updateDirections(true);
 	}
 	
 	private void setupAutocomplete(String[] stations) {
@@ -120,5 +207,20 @@ public class TripActivity extends Activity {
 				updateDirections(true);
 			}
 		});
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		Bundle a = intent.getExtras();
+		if (a.containsKey("selectedStation")) {
+			String station = a.getString("selectedStation");
+			if (selectOrigin) {
+				origin = station;
+			} else {
+				destination = station;
+			}
+			updateFieldsWithCurrentData();
+		}
+		Log.d("Achal", "Received new intent");
 	}
 }

@@ -141,12 +141,13 @@ public class BartHandler {
 			}
 		});
 		requester.execute(baseBartUrl + "/sched.aspx?cmd=depart&orig="
-				+ originStation + "&dest=" + destinationStation + "&date=now&"
+				+ stations.get(originStation).abbr + "&dest=" + stations.get(destinationStation).abbr + "&date=now&"
 				+ keyStr + "&b=0&a=1");
 	}
 	
 	private void parseTrip(Document doc, Callback<TripData, Void> callback) {
 		try {
+			Log.d("Achal", "Parsing trip");
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			String tripSelector = "//request/trip";
 			Element trip = (Element) xpath.evaluate(tripSelector, doc, XPathConstants.NODE);
@@ -157,9 +158,9 @@ public class BartHandler {
 			String arrivalTime = trip.getAttribute("destTimeMin");
 			
 			Log.d("Achal", "Data: " + origin + ", " + destination + ", " + fare + ", " + departTime + ", " + arrivalTime);
-			ArrayList<TripLegData> tripLegs = new ArrayList<TripLegData>();
 			
 			NodeList tripLegNodes = trip.getChildNodes();
+			ArrayList<TripLegData> tripLegs = new ArrayList<TripLegData>(tripLegNodes.getLength());
 			for (int i = 0; i < tripLegNodes.getLength(); i++) {
 				Element tripLegNode = (Element) tripLegNodes.item(i);
 				int index = Integer.parseInt(tripLegNode.getAttribute("order"));
@@ -170,7 +171,7 @@ public class BartHandler {
 				int route = Integer.parseInt(tripLegNode.getAttribute("line").split(" ")[1]);
 				
 				Log.d("Achal", "Leg " + index + ": " + start + ", " + end + ", " + startTime + ", " + endTime + ", route: " + route);
-				tripLegs.add(index, new TripLegData(start, end, startTime, endTime, route));
+				tripLegs.add(index - 1, new TripLegData(start, end, startTime, endTime, route));
 			}
 			TripData tripData = new TripData(origin, destination, departTime, arrivalTime, fare, tripLegs);
 			callback.call(tripData);

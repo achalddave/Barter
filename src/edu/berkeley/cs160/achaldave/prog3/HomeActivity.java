@@ -44,7 +44,7 @@ public class HomeActivity extends Activity {
 
 		prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
-		if (true || !prefs.contains("has_launched_before")) {
+		if (!prefs.contains("has_launched_before")) {
 			openHelp();
 		}
 	}

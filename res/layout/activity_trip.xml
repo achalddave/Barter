@@ -35,7 +35,7 @@
             android:paddingRight="5dp" >
 
             <ImageView
-                android:id="@+id/selectTripOrigin"
+                android:id="@+id/tripSelectOrigin"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignBottom="@+id/tripOriginField"
@@ -76,7 +76,7 @@
             android:paddingRight="5dp" >
 
             <ImageView
-                android:id="@+id/selectTripDestination"
+                android:id="@+id/tripSelectDestination"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignBottom="@+id/tripDestinationField"
@@ -92,7 +92,6 @@
                 android:ems="10"
                 android:textAppearance="?android:attr/textAppearanceMedium" >
 
-                <requestFocus />
             </AutoCompleteTextView>
 
             <TextView
@@ -131,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/linearLayout2"
         android:layout_below="@+id/linearLayout2"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Departs at " />
 
     <TextView
@@ -140,7 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView5"
         android:layout_below="@+id/textView5"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Arrives at " />
 
     <TextView
@@ -149,7 +148,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/linearLayout2"
         android:layout_toRightOf="@+id/TripTitle"
-        android:text="$3.50"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -158,23 +156,22 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView7"
         android:layout_alignBottom="@+id/textView7"
-        android:layout_toRightOf="@+id/textView7"
-        android:text="5:30pm" />
+        android:layout_toRightOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/tripDepartureTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView7"
-        android:layout_toRightOf="@+id/textView5"
-        android:text="4:30 pm" />
+        android:layout_toRightOf="@+id/textView5" />
 
     <ListView
         android:id="@+id/tripDirections"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView7"
-        android:layout_below="@+id/textView7" >
+        android:layout_below="@+id/textView7"
+        android:layout_marginTop="10dp" >
 
     </ListView>
 

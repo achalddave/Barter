@@ -36,5 +36,6 @@
     <string name="welcome">Welcome to the Bay Area!</string>
     <string name="bart">BART</string>
     <string name="welcome_sub">We\'ll help you get around</string>
+    <string name="title_activity_dialog_map">DialogMapActivity</string>
 
 </resources>
