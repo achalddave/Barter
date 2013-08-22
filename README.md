@@ -11,4 +11,4 @@ Also this is due soon so please excuse the hardcoded strings and camelcase + und
 
 # Details
 
-So I finished! You can view screenshots and listen to my tired voice explain this thing in a video [here](http://husk.eecs.berkeley.edu/courses/cs160-sp13/index.php/Individual_Programming_Assignment_3).
+So I finished! You can view screenshots and listen to my tired voice explain this thing in a video [here](http://husk.eecs.berkeley.edu/courses/cs160-sp13/index.php/ProgrammingAssignment3-Achal_Dave).
